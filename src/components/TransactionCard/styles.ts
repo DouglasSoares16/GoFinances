@@ -15,10 +15,20 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
 
-export const Amount = styled.Text`
+interface TransactionProps {
+  type: "positive" | "negative";
+}
+
+export const Amount = styled.Text<TransactionProps>`
   font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   margin-top: 2px;
+
+  color: ${
+    ({ type, theme }) => type === "positive" ? 
+      theme.colors.success : 
+      theme.colors.attention
+  }
 `;
 
 export const Footer = styled.View`
