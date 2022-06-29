@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import React from 'react';
 import { ThemeProvider } from "styled-components";
 import { Poppins_400Regular, Poppins_500Medium, Poppins_700Bold, useFonts } from "@expo-google-fonts/poppins";
