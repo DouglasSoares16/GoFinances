@@ -1,4 +1,5 @@
 import React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { CategoryTitle, Container, Icon } from "./styles";
 
 interface Props {
