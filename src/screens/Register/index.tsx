@@ -50,7 +50,7 @@ export function Register() {
 
   const navigation = useNavigation<NavigationProps>();
 
-  function handleTransactionsTypeSelect(type: "up" | "down") {
+  function handleTransactionsTypeSelect(type: "positive" | "negative") {
     setTransactionType(type);
   }
 
@@ -61,10 +61,10 @@ export function Register() {
   function handleCloseSelectCategoryModal() {
     setCategoryModalOpen(false);
   }
-
-  const dataKey = "@gofinances:transactions";
-
+  
   async function handleRegister({ name, amount }: FormData) {
+    const dataKey = "@gofinances:transactions";
+
     if (!transactionType)
       return Alert.alert("Selecione o tipo da transação");
 
@@ -75,7 +75,7 @@ export function Register() {
       id: String(uuid.v4()),
       name,
       amount,
-      transactionType,
+      type: transactionType,
       category: category.key,
       date: new Date()
     }
@@ -134,16 +134,16 @@ export function Register() {
 
             <TransactionTypes>
               <TransactionTypeToggleButton
-                isActive={transactionType === "up"}
+                isActive={transactionType === "positive"}
                 title="Income"
                 type="up"
-                onPress={() => handleTransactionsTypeSelect("up")} />
+                onPress={() => handleTransactionsTypeSelect("positive")} />
 
               <TransactionTypeToggleButton
-                isActive={transactionType === "down"}
+                isActive={transactionType === "negative"}
                 title="Outcome"
                 type="down"
-                onPress={() => handleTransactionsTypeSelect("down")} />
+                onPress={() => handleTransactionsTypeSelect("negative")} />
             </TransactionTypes>
 
             <CategorySelectButton
