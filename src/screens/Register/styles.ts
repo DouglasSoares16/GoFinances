@@ -33,7 +33,9 @@ export const Form = styled.View`
   padding: 24px;
 `;
 
-export const Fields = styled.View``;
+export const Fields = styled.View`
+  margin-bottom: 20px;
+`;
 
 export const TransactionTypes = styled.View`
   flex-direction: row;
