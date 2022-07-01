@@ -44,3 +44,11 @@ export const Footer = styled.View`
 
   background-color: ${({ theme }) => theme.colors.secondary};
 `;
+
+export const FooterWrapper = styled.View`
+  margin-top: ${RFPercentage(-4)}px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 30px;
+  margin-right: 30px;
+`;
