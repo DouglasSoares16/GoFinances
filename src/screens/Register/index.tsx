@@ -16,6 +16,7 @@ import { TransactionTypeToggleButton } from "../../components/Form/TransactionTy
 import { CategorySelect } from "../CategorySelect";
 
 import { Container, Form, Header, Title, Fields, TransactionTypes } from "./styles";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface FormData {
   [name: string]: string;
@@ -48,6 +49,8 @@ export function Register() {
     resolver: yupResolver(schema)
   });
 
+  const { user } = useAuth();
+
   const navigation = useNavigation<NavigationProps>();
 
   function handleTransactionsTypeSelect(type: "positive" | "negative") {
@@ -61,10 +64,8 @@ export function Register() {
   function handleCloseSelectCategoryModal() {
     setCategoryModalOpen(false);
   }
-  
-  async function handleRegister({ name, amount }: FormData) {
-    const dataKey = "@gofinances:transactions";
 
+  async function handleRegister({ name, amount }: FormData) {
     if (!transactionType)
       return Alert.alert("Selecione o tipo da transação");
 
@@ -81,6 +82,8 @@ export function Register() {
     }
 
     try {
+      const dataKey = `@gofinances:transactions_user:${user.id}`;
+
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 

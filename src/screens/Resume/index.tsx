@@ -9,6 +9,7 @@ import { useTheme } from "styled-components/native";
 import { VictoryPie } from "victory-native";
 
 import { HistoryCard } from "../../components/HistoryCard";
+import { useAuth } from "../../contexts/AuthContext";
 import { categories } from "../../utils/categories";
 import {
   ChartContainer,
@@ -46,6 +47,8 @@ export function Resume() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(true);
 
+  const { user } = useAuth();
+
   const theme = useTheme();
 
   function handleDateChange(action: "next" | "prev") {
@@ -54,13 +57,12 @@ export function Resume() {
 
     else
       setSelectedDate(subMonths(selectedDate, 1));
-
   }
 
   async function loadData() {
     setIsLoading(true);
 
-    const dataKey = "@gofinances:transactions";
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormated = response ? JSON.parse(response) : [];
 

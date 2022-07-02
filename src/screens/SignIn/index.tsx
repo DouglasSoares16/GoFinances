@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert } from "react-native";
+import { ActivityIndicator, Alert, Platform } from "react-native";
 import { useTheme } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import React, { useState } from "react";
@@ -32,11 +32,10 @@ export function SignIn() {
     } catch (error) {
       console.log(error);
       Alert.alert("Não foi possível conectar a conta Apple");
-    } finally {
       setIsLoading(false);
     }
   }
-    
+
   async function handleSignInWithGoogle() {
     try {
       setIsLoading(true);
@@ -44,8 +43,7 @@ export function SignIn() {
       return await signInWithGoogle();
     } catch (error: any) {
       console.log(error);
-      Alert.alert("Não foi possível conectar a conta")
-    } finally {
+      Alert.alert("Não foi possível conectar a conta");
       setIsLoading(false);
     }
   }
@@ -59,7 +57,7 @@ export function SignIn() {
           <Title>
             Controle suas {'\n'}
             finanças e forma {'\n'}
-            muito simples 
+            muito simples
           </Title>
         </TitleWrapper>
 
@@ -76,14 +74,16 @@ export function SignIn() {
             svg={GoogleSvg}
             onPress={handleSignInWithGoogle} />
 
-          <SignInSocialButton
-            title="Entrar com Apple"
-            svg={AppleSvg}
-            onPress={handleSignInWithApple} />
+          {Platform.OS === "ios" && (
+            <SignInSocialButton
+              title="Entrar com Apple"
+              svg={AppleSvg}
+              onPress={handleSignInWithApple} />
+          )}
         </FooterWrapper>
 
-        { isLoading && (
-          <ActivityIndicator 
+        {isLoading && (
+          <ActivityIndicator
             color={colors.shape}
             style={{ marginTop: 18 }}
           />
