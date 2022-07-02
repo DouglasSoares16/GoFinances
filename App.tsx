@@ -6,13 +6,11 @@ import React from 'react';
 import { ThemeProvider } from "styled-components";
 import { Poppins_400Regular, Poppins_500Medium, Poppins_700Bold, useFonts } from "@expo-google-fonts/poppins";
 import AppLoading from 'expo-app-loading';
-import { NavigationContainer } from "@react-navigation/native";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import theme from './src/global/styles/theme';
-// import { AppRoutes } from './src/routes/app.routes';
+import { Routes } from './src/routes';
 import { StatusBar } from "react-native";
-import { SignIn } from "./src/screens/SignIn";
 import { AuthProvider } from "./src/contexts/AuthContext";
 
 export default function App() {
@@ -29,13 +27,11 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
           <StatusBar barStyle="light-content" />
 
           <AuthProvider>
-            <SignIn />
+            <Routes />
           </AuthProvider>
-        </NavigationContainer>
       </ThemeProvider>
     </GestureHandlerRootView>
   );

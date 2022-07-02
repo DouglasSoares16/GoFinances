@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import * as AuthSession from "expo-auth-session";
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,6 +34,9 @@ export const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthContextProps) {
   const [user, setUser] = useState<User>({} as User);
+  const [userStoragedLoading, setUserStoragedLoading] = useState(true);
+
+  const userStorageKey = "@gofinances:user";
 
   async function signInWithGoogle() {
     try {
@@ -56,8 +59,7 @@ function AuthProvider({ children }: AuthContextProps) {
         };
 
         setUser(userLogged);
-
-        console.log(userLogged);
+        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
       }
 
     } catch (error: any) {
@@ -83,12 +85,28 @@ function AuthProvider({ children }: AuthContextProps) {
         };
 
         setUser(userLogged);
-        await AsyncStorage.setItem("@gofinances:user", JSON.stringify(userLogged));
+        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
       }
     } catch (error: any) {
       throw new Error(error);
     }
   }
+
+  useEffect(() => {
+    async function loadStorageData() {
+      const userStoraged = await AsyncStorage.getItem(userStorageKey);
+
+      if (userStoraged) {
+        const userLogged = JSON.parse(userStoraged) as User;
+
+        setUser(userLogged);
+      }
+
+      setUserStoragedLoading(false);
+    }
+
+    loadStorageData();
+  }, [])
 
   return (
     <AuthContext.Provider value={{ user, signInWithGoogle, signInWithApple }}>
