@@ -11,7 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import theme from './src/global/styles/theme';
 import { Routes } from './src/routes';
 import { StatusBar } from "react-native";
-import { AuthProvider } from "./src/contexts/AuthContext";
+import { AuthProvider, useAuth } from "./src/contexts/AuthContext";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,7 +20,9 @@ export default function App() {
     Poppins_700Bold
   });
 
-  if (!fontsLoaded) {
+  const { userStoragedLoading } = useAuth();
+
+  if (!fontsLoaded || userStoragedLoading) {
     return <AppLoading />;
   }
 
