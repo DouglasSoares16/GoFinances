@@ -6,7 +6,6 @@ import { getBottomSpace, getStatusBarHeight } from "react-native-iphone-x-helper
 
 import { DataListProps } from ".";
 import { BorderlessButton } from "react-native-gesture-handler";
-import { ReactNode } from "react";
 
 export const Container = styled.View`
   flex: 1;
@@ -27,7 +26,7 @@ export const Header = styled.View`
 export const UserWrapper = styled.View`
   width: 100%;
   padding: 0 24px;
-  margin-top: ${getStatusBarHeight() + RFValue(28)}px;
+  margin-top: ${getStatusBarHeight() + 5}px;
 
   flex-direction: row;
   justify-content: space-between;
@@ -80,13 +79,13 @@ export const HighlightCards = styled.ScrollView.attrs({
   width: 100%;
   position: absolute;
 
-  margin-top: ${RFPercentage(20)}px;
+  margin-top: ${RFPercentage(16)}px;
 `;
 
 export const Transactions = styled.View`
   flex: 1;
   padding: 0 24px;
-  margin-top: ${RFPercentage(18)}px;
+  margin-top: ${RFPercentage(13)}px;
 `;
 
 export const Title = styled.Text`
